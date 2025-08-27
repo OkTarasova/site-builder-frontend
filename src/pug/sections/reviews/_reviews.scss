@@ -1,81 +1,63 @@
 @use "@pug/components/_ui/cards/review-card/review-card";
+@forward "@styles/_extends/flexbox";
+@forward "@styles/_extends/effects";
+@forward "@styles/_extends/resets";
+@use "@styles/_mixins/media-queries" as *;
 @use "@styles/_mixins/container-queries" as *;
 @use "@styles/_vars/scoped" as *;
+@use "@pug/components/_ui/cards/staff-preview-card/staff-preview-card";
 
 .reviews {
   container: reviews-container / inline-size;
 
   .swiper-container {
     position: relative;
-    padding: 0 20px;
-    padding-bottom: 24px;
-    height: 100%;
 
-    .swiper-slide {
-      height: auto;
-
-      .review-card {
-        height: 100%;
-      }
+    &:has(.swiper-pagination) {
+      padding-bottom: 30px;
     }
 
-    @include container-up("reviews-container", $tablet-width) {
-      padding: 0 60px 40px;
-
-      .reviews-slider {
-        margin-bottom: 32px;
-
-        .review-card {
-          &__rating {
-            svg {
-              width: 20px;
-            }
-          }
-
-          &__content {
-            margin-bottom: 20px;
-          }
-
-          &____image {
-            width: 48px;
-            height: 48px;
-          }
-        }
-      }
+    .swiper-pagination {
+      bottom: 0;
+      padding: 0 60px;
     }
 
-    @include container-up("reviews-container", $desktop-width) {
-      .review-card {
-        &__content {
-          margin-bottom: 32px;
-        }
-      }
-    }
-
-    .swiper-button-next,
-    .swiper-button-prev {
+    .swiper-button-prev,
+    .swiper-button-next {
+      display: none;
       position: absolute;
       top: 50%;
-      width: 36px;
-      height: 36px;
+      transform: translateY(-50%);
     }
 
     .swiper-button-prev {
       left: 0;
-      transform: translate(-50%, -50%);
-
-      svg {
-        transform: rotate(180deg);
-      }
+      transform: translateY(-50%) rotate(180deg);
     }
 
     .swiper-button-next {
       right: 0;
-      transform: translate(50%, -50%);
     }
 
-    .swiper-pagination {
-      position: static;
+    .swiper-slide {
+      width: auto;
+      height: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    @include media-up($mobile-width) {
+      &:has(.swiper-button-prev),
+      &:has(.swiper-button-next) {
+        padding-left: 60px;
+        padding-right: 60px;
+
+        .swiper-button-next,
+        .swiper-button-prev {
+          display: flex;
+        }
+      }
     }
   }
 }
